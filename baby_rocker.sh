@@ -4,6 +4,6 @@ do
 	#eject cdrom
 	eject 
 
-	#pull back cd rom tray back
+	#pull back cd rom tray 
 	eject -t 
 done
