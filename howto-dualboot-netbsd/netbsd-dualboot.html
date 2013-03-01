@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Howto: Dual-Boot NetBSD</title>
+  <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><style type="text/css">.code{background-color:#bbb;padding:10px 10px 10px 10px;margin-right:50%}</style>
+</head>
+<body style="margin-left:40px; margin-top:30px; margin-right:40px; margin-bottom:30px;"><noscript><meta HTTP-EQUIV="refresh" content="0;url='http://www.google-melange.com/gci/work/download/google/gci2012/7994202?id=4001&amp;ModPagespeed=noscript'" /><style><!--table,div,span,font,p{display:none} --></style><div style="display:block">Please click <a href="http://www.google-melange.com/gci/work/download/google/gci2012/7994202?id=4001&amp;ModPagespeed=noscript">here</a> if you are not redirected within a few seconds.</div></noscript>
+  <h1 style="text-align:center;">Howto: Dual-Boot NetBSD</h1>
+  <p>It is described here, how to dual boot NetBSD with another operating system installed previously, or to be installed after NetBSD.</p>
+  <a name="backup">
+  <h2>Create backup for your data.</h2>
+    <p>It is important to backup your files to an external backup medium before attempting a dual-boot install (or partitioning), in case your hard drive corrupts, it will result in loss of data. DVD/CD, External hard drive, pen-drives, or cloud sync services are suitable for this purpose.</p></a>
+  <h2>Install Linux/Windows/Unix with NetBSD.</h2>
+    <h3>Install NetBSD after another operating system.</h3>
+      <ul>
+	<li>Download the .iso file for your hardware architecture and burn it to a CD or DVD.</li>
+	<li>Insert the LiveCD into your CD-ROM drive and reboot your PC.</li>
+	<li>If the computer does not boot from the CD (e.g. Linux starts again instead), reboot and check your BIOS settings by pressing F2, F12, Delete, or ESC. Select "boot from CD".</li>
+	<li>Proceed with installation.</li>
+	<li>If you have already partitioned the disk and left space for NetBSD, install it to that and then follow the rest of the steps. </li>
+	<li>Otherwise, partition the disk first. (can be done using <a href="http://www.tldp.org/HOWTO/Partition/fdisk_partitioning.html">fdisk</a> from Linux/Unix, or the <i>partition manager</i> in Windows)</li>
+      </ul>
+      <p>Here NetBSD is sharing a hard disk with another operating system.<br/>
+      You will want to install a <b>boot manager</b>, i.e., a program which lets you choose which OS to start at boot time. <abbr title="NetBSD installer">sysinst</abbr> can do this for you and will ask if you want to install one. Or you can manually install your preferable boot manager.</p>
+    <h3>Install another operating system after NetBSD.</h3>
+      <ul>
+	<li>It is recommended that you partition your hard drive, before starting the installation, through NetBSD. Otherwise, you can use the partitioning tool of the operating system you are going to install. You may even need to resize your current NetBSD partition, so ensure that you have a <a href="#backup">backup</a> of your data.</li>
+	<li>Install the other OS in the newly made partition. </li>
+	<li>While installing the other operating system, you may have installed a new bootloader. Generally various boot managers identify NetBSD automatically, still if you prefer you can re-install your favorite bootloader from NetBSD, and add the new OS in the list.</li>
+	<li>If the new os is linux, and it automatically installed grub2 bootloader, you can add NetBSD to the grub list by adding the following in /etc/grub.d/40_custom <br/>
+	  <div class="code">
+	  <code>
+	    menuentry "NetBSD on sda1" {<br/>
+	    insmod ufs2<br/>
+	    set root=(hd0,msdos1)<br/>
+	    knetbsd /netbsd --root=wd0a<br/>
+	    }<br/>
+	  </code>
+	  </div>
+	   replace "ufs2", "wd0a" and "(hd0,msdos1)", with your configuration.
+	</li>
+      </ul>
+<script>(function(){var c=window,e="",f="&",l="&b_cdr=",m="&b_cihrl=",n="&b_cii=",q="&b_cilrl=",r="&b_ncdl=",s="&b_ncii=",t="&b_ncini=",u="&b_ncl=",v="&exptid=",w="&ft=",x="&hft=",y="&htmlAt=",z="&ifr=0",A="&ifr=1",B="&nrp=",C="&r",D="&url=",E="=",F="?",G="beforeunload",H="ets=",I="load",J="load:",K="on",L="unload:";c.pagespeed=c.pagespeed||{};var M=c.pagespeed,N=function(a,b,d,g,h,k){this.f=a;this.a=b;this.c=d;this.d=g;this.b=h;this.g=k;this.h=e};M.beaconUrl=M.h;
+N.prototype.e=function(){var a=this.f,b=c.mod_pagespeed_start,d=Number(new Date)-b,a=a+(-1==a.indexOf(F)?F:f),a=a+H+(this.a==I?J:L),a=a+d,a=a+(C+this.a+E);c.performance?(d=c.performance.timing,b=d.navigationStart,a+=d.loadEventStart-b):a+=d;this.a==G&&c.mod_pagespeed_loaded||(a+=c.parent!=c?A:z,this.a==I&&(c.mod_pagespeed_loaded=!0,(d=c.mod_pagespeed_num_resources_prefetched)&&(a+=B+d),(d=c.mod_pagespeed_prefetch_start)&&(a+=y+(b-d))),M.panelLoader&&(b=M.panelLoader.getCsiTimings().time,a+=l+b.CRITICAL_DATA_RECEIVED+
+n+b.CRITICAL_IMAGES_INLINED+q+b.CRITICAL_IMAGES_LOW_RES_LOADED+m+b.CRITICAL_IMAGES_HIGH_RES_LOADED+r+b.NON_CACHEABLE_DATA_LOADED+u+b.NON_CRITICAL_LOADED,b=M.panelLoader.getCriticalImagesInfo(),a+=s+b.NUM_CRITICAL_IMAGES_INLINED+t+b.NUM_CRITICAL_IMAGES_NOT_INLINED),this.c!=e&&(a+=x+this.c),this.d!=e&&(a+=w+this.d),this.b!=e&&(a+=v+this.b),a+=D+encodeURIComponent(this.g),M.beaconUrl=a,(new Image).src=a)};
+M.i=function(a,b,d,g,h,k){var p=new N(a,b,d,g,h,k);c.addEventListener?c.addEventListener(b,function(){p.e()},!1):c.attachEvent(K+b,function(){p.e()})};M.addInstrumentationInit=M.i;})();
+
+pagespeed.addInstrumentationInit('http://1-ps.googleusercontent.com/beacon?org=75_1_vn', 'load', '', '1665', '', 'http://www.google-melange.com/gci/work/download/google/gci2012/7994202?id=4001');</script></body>
+</html>
