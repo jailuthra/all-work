@@ -1,5 +1,5 @@
-All my work in a single repo.
+All my small projects in a single repo.
 
-Switch branches to view projects in diff languages.
+Switch branches to view different projects.
 
-All the work is licensed under GPLv3. See LICENSE for detail.
+Everyhting is licensed under GPLv3 (Unless specified otherwise). See LICENSE for detail.
