@@ -1,0 +1,33 @@
+Finding min. of 2 nos.
+----------------------
+
+min=y^((x^y)&-(x<y));
+
+
+if (x<y)
+	min=y^x^y;
+else if (y<x)
+	min=y^0;
+
+
+
+
+Multiplication by 2
+--------------------
+
+left shift
+
+5=101
+10=1010
+20=10100 
+
+
+Division by 2
+--------------
+
+right shift
+
+20=10100
+10=1010
+
+

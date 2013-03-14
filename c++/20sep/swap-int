@@ -1,0 +1,17 @@
+Swapping Integers
+-----------------
+
+a=a+b;
+b=a-b;
+a=a-b;
+
+
+Using XOR
+------------
+
+a = a XOR b;
+b = a XOR b;
+a = a XOR b;
+
+
+
