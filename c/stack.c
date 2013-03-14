@@ -1,3 +1,5 @@
+// Copyright (C) 2013 Jai Luthra <me@jailuthra.in> 
+
 #include<stdio.h>
 #include<stdlib.h>
 

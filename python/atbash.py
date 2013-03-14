@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Copyright (C) 2013 Jai Luthra <me@jailuthra.in> 
+
 str1 = input('Enter the String You Want To Code/Decode: ')
 str2 = ''
 for char in str1:

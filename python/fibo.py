@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Copyright (C) 2013 Jai Luthra <me@jailuthra.in> 
+
 a = 1
 b = 0
 cnt = 1

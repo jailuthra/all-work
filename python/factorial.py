@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Copyright (C) 2013 Jai Luthra <me@jailuthra.in> 
+
 # Computes the factorial of the given number
 # chmod +x, then execute it like :  
 # ./factorial.py [number]
