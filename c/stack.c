@@ -6,6 +6,15 @@
 int arr[10];
 int top = -1;
 
+void menu();
+void push(int x);
+void showStack();
+void pop(); 
+
+int main() {
+	menu();
+	return 0;
+}
 
 void menu() {
 	
@@ -15,7 +24,7 @@ void menu() {
 	scanf("%d", &option);
 	
 	switch (option) {
-		case 1: printf("Input: ");
+		case 1: printf("\n\nInput: ");
 			scanf("%d", &input);
 			push(input);
 			break;
@@ -32,14 +41,14 @@ void menu() {
 
 
 
-int push(int x) {	
+void push(int x) {	
 	top++;
 	if (top>=10) printf("\n\nStack Overflow!!!");
 	else arr[top]=x;
 	menu();
 }
 
-int showStack() {
+void showStack() {
 	int a = top;
 	if (a==-1) printf("\n\nError: Stack Underflow");
 	else 
@@ -47,22 +56,14 @@ int showStack() {
 		printf("\n\nStack Is:\n");
 		for (a; a>=0; a--) 
 		  printf("%d\n",arr[a]);
-		printf("\n");
 		menu();
 	}
 }
 
 
-int pop() {
-	printf("\n\nPopped: %d",arr[top]);
+void pop() {
+	printf("\n\nPopped: %d\n",arr[top]);
 	top--;
 	menu();
 }
-
-
-int main() {
-	menu();
-	return 0;
-}
-	
 
