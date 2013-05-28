@@ -3,11 +3,11 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char * argv[]) {
     
     int n, i=3, result=0;
-    cin >> n;   // Input the number to be tested
-    
+    n = atoi(argv[1]);
+
     if (n==2 || n==3) result=1;    // Check if the number is 2 or 3
     else if (n%2 == 0) result=0;    // Check if number is even
     else {
@@ -21,8 +21,8 @@ int main() {
         }
     }
 
-    if (result) cout<<"prime";
-    else cout<<"not prime";
+    if (result) cout<<"prime"<<endl;
+    else cout<<"not prime"<<endl;
     
     return 0;
 }
