@@ -5,7 +5,7 @@ using namespace std;
 class Rectangle {
     int l,b;
   public:
-    Rectangle (int, int);       // Same name as class, i.e constructer
+    Rectangle (int, int);       // Same name as class, i.e constructor
     int area () { return l*b; }
 };
 
