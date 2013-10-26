@@ -1,11 +1,8 @@
 #include <iostream>
 #include "rectangle.h"
 
-Rectangle::Rectangle (int length, int width) 
-{
-    m_length = length;
-    m_width = width;
-}
+Rectangle::Rectangle (int length, int width) :
+    m_length(length), m_width(width) {}
 
 void Rectangle::displayArea()
 {   

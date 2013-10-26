@@ -12,4 +12,4 @@ private:
     int computeArea();
 };
 
-#endif   
+#endif
