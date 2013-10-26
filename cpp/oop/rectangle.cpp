@@ -6,8 +6,7 @@ Rectangle::Rectangle (int length, int width) :
 
 void Rectangle::displayArea()
 {   
-    int area = computeArea();
-    std::cout << "The area is: " << area << std::endl;
+    std::cout << "The area is: " << computeArea() << std::endl;
 }
 
 int Rectangle::computeArea()
