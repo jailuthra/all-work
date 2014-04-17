@@ -50,7 +50,7 @@ void push(int x) {
 
 void showStack() {
 	int a = top;
-	if (a==-1) printf("\n\nError: Stack Underflow");
+	if (a==-1) fprintf(stderr, "\n\nError: Stack Underflow");
 	else 
 	{
 		printf("\n\nStack Is:\n");
