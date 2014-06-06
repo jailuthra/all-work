@@ -38,9 +38,6 @@ void menu() {
 
 }
 
-
-
-
 void push(int x) {	
 	top++;
 	if (top>=10) printf("\n\nStack Overflow!!!");

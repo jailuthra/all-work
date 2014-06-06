@@ -1,7 +1,9 @@
 #include <stdio.h>
 
-void merge(int [], int, int, int);
-void sort(int[], int, int);
+int inversions = 0;
+
+void countSplitInv(int [], int, int, int);
+void countInv(int[], int, int);
  
 int main() {
     int i, size;
@@ -12,16 +14,12 @@ int main() {
     for (i=0; i<size; i++) {
         scanf("%d", &A[i]);
     }
-    sort(A, 0, size-1);
-    printf("\nSorted array is: ");
-    for (i=0; i<size; i++) {
-        printf("%d ", A[i]);
-    }
-    printf("\n");
+    countInv(A, 0, size-1);
+    printf("\nNumber of inversions are: %d\n", inversions);
     return 0;
 }
 
-void merge(int A[], int start, int mid, int end) {
+void countSplitInv(int A[], int start, int mid, int end) {
     int sizeL = mid - start + 1;
     int sizeM = end - mid;
     int L[sizeL], M[sizeM];
@@ -45,6 +43,8 @@ void merge(int A[], int start, int mid, int end) {
         else {
             A[k] = M[j];
             j++;
+            /* inversions += number of elements remaining in L */ 
+            inversions += sizeL - i;
         }
         k++;
     }
@@ -62,13 +62,13 @@ void merge(int A[], int start, int mid, int end) {
     }
 }
 
-void sort(int A[], int start, int end) {
+void countInv(int A[], int start, int end) {
     /* Base case is a single element array i.e already sorted */
     if (start < end) {
         int mid = (start + end)/2;
         /* Divide and conquer ;) */
-        sort(A, start, mid);
-        sort(A, mid+1, end);
-        merge(A, start, mid, end);
+        countInv(A, start, mid);
+        countInv(A, mid+1, end);
+        countSplitInv(A, start, mid, end);
     }
 }
