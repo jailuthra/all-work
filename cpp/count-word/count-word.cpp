@@ -8,7 +8,7 @@
 using namespace std;
 
 int countWord(char *, char *);
-bool substringFound(char *, char *, int &);
+bool wordFound(char *, char *, int &);
 
 int main(int argc, char * argv[]) {
     // Check if all arguments are given
@@ -16,17 +16,16 @@ int main(int argc, char * argv[]) {
         cout << "Usage: " << argv[0] << " <word_to_count> <filename>" << endl;
         return 1;
     }
-    ifstream * file = new ifstream;
-    file->open(argv[2], ios::in);
+    ifstream file;
+    file.open(argv[2], ios::in);
     char str[300];
     int count = 0;
     // Read file line-by-line until EOF
-    while (!file->eof()) {
-        file->getline(str, 300);
+    while (!file.eof()) {
+        file.getline(str, 300);
         count += countWord(argv[1], str);
     }
-    file->close();
-    delete file;
+    file.close();
     cout << count << endl;
     return 0;
 }
@@ -34,19 +33,15 @@ int main(int argc, char * argv[]) {
 /* Counts the number of occurences of word in str */
 int countWord(char * word, char * str) {
     int i = 0, j = 0, count = 0;
-    bool wordFound;
     // Check if the first word matches
-    // A substring is a word if it is followed by a space, or is followed by null (i.e last word)
-    wordFound = substringFound(word, str, i) && (str[i]==' ' || !str[i]);
-    if (wordFound) {
+    if (wordFound(word, str, i)) {
         count++;
     }
     // Check the remaining words
     while (str[i]) {
         if (str[i]==' ') {
             i += 1;
-            wordFound = substringFound(word, str, i) && (str[i]==' ' || !str[i]);
-            if (wordFound) {
+            if (wordFound(word, str, i)) {
                 count++;
             }
         } else {
@@ -56,19 +51,31 @@ int countWord(char * word, char * str) {
     return count;
 }
 
-/** Checks if subStr is present in the str starting from str[index] */
-bool substringFound(char * subStr, char * str, int &index) {
-    bool found = true;
+/** Checks if subStr is present in the str starting from str[index]
+  * Then check if subStr is followed with a blank space, comma, null etc.
+  * which means it is a word */
+bool wordFound(char * subStr, char * str, int &index) {
+    bool substrFound = true;
     int j = 0;
     while (subStr[j]) {
         if (tolower(subStr[j]) != tolower(str[index])) {
-            found = false;
+            substrFound = false;
             break;
         } else {
             index++;
             j++;
         }
     }
-    return found;
+    bool substrIsWord;
+    switch (str[index]) {
+    case ' ': case ';': case '.':
+    case ':': case ',': case '\0':
+        substrIsWord = true;
+        break;
+    default:
+        substrIsWord = false;
+        break;
+    }
+    return substrFound && substrIsWord;
 }
 
