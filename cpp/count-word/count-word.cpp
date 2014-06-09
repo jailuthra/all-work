@@ -7,8 +7,8 @@
 
 using namespace std;
 
-int countWord(char *, char *);
-bool wordFound(char *, char *, int &);
+int countWord(char *, ifstream &);
+bool wordMatches(char *, ifstream &);
 
 int main(int argc, char * argv[]) {
     // Check if all arguments are given
@@ -18,64 +18,47 @@ int main(int argc, char * argv[]) {
     }
     ifstream file;
     file.open(argv[2], ios::in);
-    char str[300];
-    int count = 0;
-    // Read file line-by-line until EOF
-    while (!file.eof()) {
-        file.getline(str, 300);
-        count += countWord(argv[1], str);
-    }
+    int count = countWord(argv[1], file);
     file.close();
     cout << count << endl;
     return 0;
 }
 
-/* Counts the number of occurences of word in str */
-int countWord(char * word, char * str) {
-    int i = 0, j = 0, count = 0;
-    // Check if the first word matches
-    if (wordFound(word, str, i)) {
+int countWord(char * word, ifstream & file) {
+    char ch;
+    int count = 0;
+    // Check if the first word in the file matches
+    if (wordMatches(word, file)) {
         count++;
     }
     // Check the remaining words
-    while (str[i]) {
-        if (str[i]==' ') {
-            i += 1;
-            if (wordFound(word, str, i)) {
+    while (file.get(ch)) {
+        if (ch == ' ' || ch == '\n') {
+            if (wordMatches(word, file)) {
                 count++;
             }
-        } else {
-            i++;
         }
     }
     return count;
 }
 
-/** Checks if subStr is present in the str starting from str[index]
-  * Then check if subStr is followed with a blank space, comma, null etc.
-  * which means it is a word */
-bool wordFound(char * subStr, char * str, int &index) {
-    bool substrFound = true;
+bool wordMatches(char * word, ifstream & file) {
     int j = 0;
-    while (subStr[j]) {
-        if (tolower(subStr[j]) != tolower(str[index])) {
-            substrFound = false;
-            break;
+    char ch;
+    while (word[j]) {
+        file.get(ch);
+        if (tolower(word[j]) != tolower(ch)) {
+            return false;
         } else {
-            index++;
             j++;
         }
     }
-    bool substrIsWord;
-    switch (str[index]) {
-    case ' ': case ';': case '.':
-    case ':': case ',': case '\0':
-        substrIsWord = true;
-        break;
-    default:
-        substrIsWord = false;
-        break;
+    // Check if the word has ended in the stream w/o modifying the stream
+    switch (file.peek()) {
+        case ' ': case ';': case '.':
+        case ':': case ',': case '\n':
+            return true;
+        default:
+            return false;
     }
-    return substrFound && substrIsWord;
 }
-
