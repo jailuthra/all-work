@@ -49,7 +49,7 @@ def count_split_inv(arr, start, mid, end):
 
 def count_inv(arr, start, end):
     if (start < end):
-        mid = int((start + end) / 2)
+        mid = (start + end) // 2
         count_inv(arr, start, mid)
         count_inv(arr, mid+1, end)
         count_split_inv(arr, start, mid, end)
