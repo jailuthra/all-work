@@ -1,19 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void merge(int [], int, int, int);
 void sort(int[], int, int);
  
-int main() {
+int main(int argc, char * argv[]) {
     int i, size;
-    printf("Enter the size of array: ");
-    scanf("%d", &size);
+    size = atoi(argv[1]);
     int A[size];
-    printf("Enter the elements: ");
     for (i=0; i<size; i++) {
         scanf("%d", &A[i]);
     }
     sort(A, 0, size-1);
-    printf("\nSorted array is: ");
     for (i=0; i<size; i++) {
         printf("%d ", A[i]);
     }
