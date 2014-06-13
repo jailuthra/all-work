@@ -5,7 +5,6 @@ import sys
 inversions = 0
 
 def main():
-    global inversions
     arr = []
     fname = sys.argv[1]
     with open(fname, 'r') as f:
