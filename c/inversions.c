@@ -1,29 +1,36 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int inversions = 0;
+#define LLI long long int
 
-void countSplitInv(int [], int, int, int);
-void countInv(int[], int, int);
+LLI inversions = 0;
+
+void countSplitInv(LLI [], LLI, LLI, LLI);
+void countInv(LLI[], LLI, LLI);
  
 int main() {
-    int i, size;
-    printf("Enter the size of array: ");
-    scanf("%d", &size);
-    int A[size];
-    printf("Enter the elements: ");
-    for (i=0; i<size; i++) {
-        scanf("%d", &A[i]);
+    LLI i, size, j, T;
+    LLI * A;
+    scanf("%lld", &T);
+    for (j=0; j<T; j++) {
+        scanf("%lld", &size);
+        A = malloc(size * sizeof(LLI));
+        for (i=0; i<size; i++) {
+            scanf("%lld", &A[i]);
+        }
+        inversions = 0;
+        countInv(A, 0, size-1);
+        printf("%lld\n", inversions);
+        free(A);
     }
-    countInv(A, 0, size-1);
-    printf("\nNumber of inversions are: %d\n", inversions);
     return 0;
 }
 
-void countSplitInv(int A[], int start, int mid, int end) {
-    int sizeL = mid - start + 1;
-    int sizeM = end - mid;
-    int L[sizeL], M[sizeM];
-    int i, j, k;
+void countSplitInv(LLI A[], LLI start, LLI mid, LLI end) {
+    LLI sizeL = mid - start + 1;
+    LLI sizeM = end - mid;
+    LLI L[sizeL], M[sizeM];
+    LLI i, j, k;
     /* Split the array A[] into L[] and M[] */
     for (i=0; i<sizeL; i++) {
         L[i] = A[start+i];
@@ -62,10 +69,10 @@ void countSplitInv(int A[], int start, int mid, int end) {
     }
 }
 
-void countInv(int A[], int start, int end) {
+void countInv(LLI A[], LLI start, LLI end) {
     /* Base case is a single element array i.e already sorted */
     if (start < end) {
-        int mid = (start + end)/2;
+        LLI mid = (start + end)/2;
         /* Divide and conquer ;) */
         countInv(A, start, mid);
         countInv(A, mid+1, end);
