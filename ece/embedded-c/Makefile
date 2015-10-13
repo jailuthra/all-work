@@ -1,4 +1,3 @@
-name=a	
 CFLAGS=-mmcu=atmega328p
 CC=avr-gcc
 
@@ -12,3 +11,6 @@ $(name).elf: $(name).c
 
 clean:
 	rm -rf *.o *.hex *.elf
+
+push: all
+	avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -U flash:w:$(name).hex 
