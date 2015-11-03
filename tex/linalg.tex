@@ -1,0 +1,92 @@
+\documentclass[twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsthm}
+\usepackage{amsmath}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+\title{Linear Algebra (MTH100) \\ Notes}
+\author{Jai Luthra}
+
+\begin{document}
+
+\maketitle
+
+\section{Eigenvalues and Eigenvectors}
+
+\subsection{Definition}
+
+An \textbf{eigenvector} of an $n \times n$ matrix is $A$ is a \underline{non-zero} vector $\bm{x}$ such that $A\bm{x} = \lambda\bm{x}$; such a vector $\bm{x}$ is called an \textbf{eigenvector corresoponding} to $\lambda$.
+Eigenvalues are sometimes also called \textit{characteristic values} or \textit{latent roots}. Eigenvectors are sometimes also called \textit{characteristic vectors}.
+
+\subsubsection{Remark}
+
+\begin{itemize}
+
+\item The zero vector is \textbf{not considered as an eigenvector} since $A\bm{0} = \lambda \bm{0}$ for all matrices $A$ and all scalars $\lambda$
+
+\item However, $0$ is allowed to be an eigenvalue for a matrix $A$, in that case the equation $A\bm{x} = 0\bm{x}$ has a non-trivial solution.
+But $A\bm{x} = \bm{0}$ has a non-trivial solution $\bm{\Leftrightarrow}$ A is not invertible. \textit{Therefore, an $n \times n$ matrix $A$ is invertible $\Leftrightarrow$ $0$ is not an eigenvalue of $A$}
+
+\item An eigenvector is not unique, since all scalar
+multiples of an eigenvector are also eigenvectors.
+Actually, the set of all eigenvectors corresponding to a
+particular eigenvalue together with the zero vector forms a
+subspace of $V = F^n$ for some n, More formally:
+
+Put $X$ = \{$ \bm{v} \in V \mid \bm{v} $ is an eigenvector for $\lambda\} \cup \{\bm{0}$\} = \{$\bm{v} \in V \mid A \bm{v} = \lambda \bm{v}$\}
+
+Then $X$ is a subspace of $V$, called the \textbf{eigenspace} of $A$
+corresponding to $\lambda$. This can be proved using the subspace test, but follows easily from the fact that the eigenspace corresponding to $\lambda$ is nothing but the null space of the matrix $(A \mathbin{-} \lambda I)$.
+
+\end{itemize}
+
+
+\begin{prop}
+If $\bm{v_{1}, v_{2}, ... v_{p}}$ are eigenvectors corresponding to \underline{distinct} eigenvalues ${\lambda_{1}, \lambda_{2}, ... \lambda_{p}}$ of the matrix $A$, then the set $\{\bm{v_{1}, v_{2}, ... v_{p}}\}$ is linearly independent.
+\end{prop}
+
+\begin{cor}
+An $n \times n$ matrix A can have at most $n$ distinct eigenvalues.
+\end{cor}
+
+\begin{proof}
+Suppose, for the sake of contradiction, that $\bm{v_{1}, v_{2}, ... v_{p}}$ are linearly dependent. Let $m$ be the smallest number such that $\bm{v_{1}, v_{2}, ... v_{m}}$ are lin. ind. \underline{and} $\bm{v_{m+1}}$ is a linear combination of preceding vectors. Then:
+
+\begin{equation} \label{eq:1}
+c_{1}\bm{v_{1}} + c_{2}\bm{v_{2}} + ... + c_{m}\bm{v_{m}} = \bm{v_{m+1}}
+\end{equation}
+
+Left multiplying by $A$, 
+
+$$
+c_{1}A\bm{v_{1}} + c_{2}A\bm{v_{2}} + ... + c_{m}A\bm{v_{m}} = A\bm{v_{m+1}}
+$$
+
+Since the $\bm{v_{i}}$ are eigenvectors: 
+$$
+c_{1}\lambda_{1}\bm{v_{1}} + c_{2}\lambda_{2}\bm{v_{2}} + ... + c_{m}\lambda_{m}\bm{v_{m}} = \lambda_{m+1}\bm{v_{m+1}}
+$$
+
+Multiplying \eqref{eq:1} by $\lambda_{m+1}$ and subtracting we get:
+
+\begin{equation} \label{eq:2}
+c_{1}(\lambda_{1} - \lambda_{m+1})\bm{v_{1}} + ... + c_{m}(\lambda_{m} - \lambda_{m+1})\bm{v_{m}} = \bm{0}
+\end{equation}
+
+However, $\bm{v_{1}, v_{2}, ... v_{m}}$ are lin. indep. so all of the coefficients in \eqref{eq:2} have to be zero: $c_{1}(\lambda_{1} - \lambda_{m+1}) = 0 \Rightarrow c_{1} = 0$ since the $\lambda$'s are given to be distinct. Similarly, $c_{2} = c_{3} = ... = c_{m} = 0$.
+
+But then from \eqref{eq:1} we get that $\bm{v_{m+1}} = \bm{0}$.
+
+However, this is not possible, since all the $\bm{v}$'s are eigenvectors.
+Since there is a contradiction, the original hypothesis must be wrong.
+Therefore, $\bm{v_{1}, v_{2}, ... v_{p}}$ are lin. independent.
+
+\end{proof}
+
+\end{document}
