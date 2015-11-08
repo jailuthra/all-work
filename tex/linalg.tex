@@ -1,17 +1,31 @@
-\documentclass[twocolumn]{article}
+\documentclass[]{extarticle}
 \usepackage[utf8]{inputenc}
 \usepackage{bm}
-\usepackage[margin=1in]{geometry}
+%\usepackage[margin=1in]{geometry}
+\usepackage[a4paper]{geometry}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{amssymb}
 
+\theoremstyle{Simple}
 \newtheorem{thm}{Theorem}[section]
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{prop}[thm]{Proposition}
-\newtheorem{cor}[thm]{Corollary}
+\newtheorem{cor}{Corollary}[thm]
 
-\title{Linear Algebra (MTH100) \\ Notes}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{note}{Note}
+
+\theoremstyle{example}
+\newtheorem{eg}{Example}[section]
+
+\title{Linear Algebra - MTH100\\ Lecture Notes}
 \author{Jai Luthra}
+\date{November, 2015}
 
 \begin{document}
 
@@ -19,21 +33,24 @@
 
 \section{Eigenvalues and Eigenvectors}
 
-\subsection{Definition}
+\begin{defn}
 
 An \textbf{eigenvector} of an $n \times n$ matrix is $A$ is a \underline{non-zero} vector $\bm{x}$ such that $A\bm{x} = \lambda\bm{x}$; such a vector $\bm{x}$ is called an \textbf{eigenvector corresoponding} to $\lambda$.
 Eigenvalues are sometimes also called \textit{characteristic values} or \textit{latent roots}. Eigenvectors are sometimes also called \textit{characteristic vectors}.
 
-\subsubsection{Remark}
+\end{defn}
 
-\begin{itemize}
+\begin{rem}
+The zero vector is \textbf{not considered as an eigenvector} since $A\bm{0} = \lambda \bm{0}$ for all matrices $A$ and all scalars $\lambda$
+\end{rem}
 
-\item The zero vector is \textbf{not considered as an eigenvector} since $A\bm{0} = \lambda \bm{0}$ for all matrices $A$ and all scalars $\lambda$
+\begin{rem}
+However, $0$ is allowed to be an eigenvalue for a matrix $A$, in that case the equation $A\bm{x} = 0\bm{x}$ has a non-trivial solution.
+But $A\bm{x} = \bm{0}$ has a non-trivial solution $\bm{\iff}$ A is not invertible. \textit{Therefore, an $n \times n$ matrix $A$ is invertible $\iff$ $0$ is not an eigenvalue of $A$}
+\end{rem}
 
-\item However, $0$ is allowed to be an eigenvalue for a matrix $A$, in that case the equation $A\bm{x} = 0\bm{x}$ has a non-trivial solution.
-But $A\bm{x} = \bm{0}$ has a non-trivial solution $\bm{\Leftrightarrow}$ A is not invertible. \textit{Therefore, an $n \times n$ matrix $A$ is invertible $\Leftrightarrow$ $0$ is not an eigenvalue of $A$}
-
-\item An eigenvector is not unique, since all scalar
+\begin{rem}
+An eigenvector is not unique, since all scalar
 multiples of an eigenvector are also eigenvectors.
 Actually, the set of all eigenvectors corresponding to a
 particular eigenvalue together with the zero vector forms a
@@ -43,11 +60,9 @@ Put $X$ = \{$ \bm{v} \in V \mid \bm{v} $ is an eigenvector for $\lambda\} \cup \
 
 Then $X$ is a subspace of $V$, called the \textbf{eigenspace} of $A$
 corresponding to $\lambda$. This can be proved using the subspace test, but follows easily from the fact that the eigenspace corresponding to $\lambda$ is nothing but the null space of the matrix $(A \mathbin{-} \lambda I)$.
+\end{rem}
 
-\end{itemize}
-
-
-\begin{prop}
+\begin{prop} \label{prop:50}
 If $\bm{v_{1}, v_{2}, ... v_{p}}$ are eigenvectors corresponding to \underline{distinct} eigenvalues ${\lambda_{1}, \lambda_{2}, ... \lambda_{p}}$ of the matrix $A$, then the set $\{\bm{v_{1}, v_{2}, ... v_{p}}\}$ is linearly independent.
 \end{prop}
 
@@ -79,7 +94,7 @@ Multiplying \eqref{eq:1} by $\lambda_{m+1}$ and subtracting we get:
 c_{1}(\lambda_{1} - \lambda_{m+1})\bm{v_{1}} + ... + c_{m}(\lambda_{m} - \lambda_{m+1})\bm{v_{m}} = \bm{0}
 \end{equation}
 
-However, $\bm{v_{1}, v_{2}, ... v_{m}}$ are lin. indep. so all of the coefficients in \eqref{eq:2} have to be zero: $c_{1}(\lambda_{1} - \lambda_{m+1}) = 0 \Rightarrow c_{1} = 0$ since the $\lambda$'s are given to be distinct. Similarly, $c_{2} = c_{3} = ... = c_{m} = 0$.
+However, $\bm{v_{1}, v_{2}, ... v_{m}}$ are lin. indep. so all of the coefficients in \eqref{eq:2} have to be zero: $c_{1}(\lambda_{1} - \lambda_{m+1}) = 0 \implies c_{1} = 0$ since the $\lambda$'s are given to be distinct. Similarly, $c_{2} = c_{3} = ... = c_{m} = 0$.
 
 But then from \eqref{eq:1} we get that $\bm{v_{m+1}} = \bm{0}$.
 
@@ -87,6 +102,233 @@ However, this is not possible, since all the $\bm{v}$'s are eigenvectors.
 Since there is a contradiction, the original hypothesis must be wrong.
 Therefore, $\bm{v_{1}, v_{2}, ... v_{p}}$ are lin. independent.
 
+\end{proof}
+
+\begin{rem}
+It is easy to verify whether a particular vector is an eigenvector of a given matrix $A$ or not. Similarly, given some number, we can verify whether it is an eigenvalue or not.
+However, in order to systematically find eigenvalues, we need to use the following result
+\end{rem}
+
+\begin{prop}
+A scalar $\lambda$ is an eigenvalue of a $n \times n$ matrix $A$ $\iff$ $\lambda$ satisfies the \textbf{characteristic equation} $det(A - \lambda I) = 0$.
+\end{prop}
+
+\begin{note}
+$det(A - \lambda I)$ is a polynomial of degree $n$ called the \textbf{characteristic polynomial} of $A$. It has at most $n$ roots, counting multiplicities. Hence an $n \times n$ matrix can have at most $n$ eigenvalues (counting multiplicities). \textbf{\textit{It is possible for a matrix with real entries to have no real eigenvalues.}}
+\end{note}
+
+\begin{note}
+If complex roots are allowed, an $n \times n$ matrix has exactly $n$ eigenvalues (counting multiplicities). Therefore, we must clearly specify which field is being considered when we talk about the eigenvalues of a matrix. For the time being, however, we will only allow real eigenvalues.
+\end{note}
+
+\subsection{Eigenvalues of similar matrices}
+
+Recall that an $n \times n$ matrix $B$ is said to be \textbf{similar} to an $n \times n$ matrix $A$ if $\exists$ an invertible matrix $P$ such that:
+$B = PAP^{-1}$ (or $A = P^{-1}BP$).
+Similarity of matrices is an equivalence relation on the set of $n \times n$ matrices.
+
+\begin{rem}
+Using the multiplicative property of
+determinants, it is easy to see that similar matrices have
+the same determinant. Using essentially the same idea,we
+can derive the following result:
+\end{rem}
+
+\begin{prop}
+If the $n \times n$ matrices $A$ and $B$ are similar, then they have the same characteristic polynomial, and hence the same eigenvalues with the same multiplicities.
+\end{prop}
+
+\section{Diagonalization of Matrices}
+
+If $A$ is a diagonal matrix, then its diagonal elements are its
+eigenvalues, and the standard basis vectors are its
+eigenvectors. This is the motivation for the following:
+
+\begin{defn}
+An $n \times n$ matrix $A$ is said to be \textbf{diagonalizable}
+if $A$ is similar to a diagonal matrix $D$, in other words if
+there is an invertible matrix $P$ and a diagonal matrix $D$
+such that $A = PDP^{-1}$
+\end{defn}
+
+\begin{rem}
+If $A$ is diagonalizable, then its powers are easy
+to compute.
+\end{rem}
+
+\begin{rem}
+If $A$ is diagonalizable, then its eigenvalues can
+be found by inspection of $D$. However, in practice, we
+have to do things the other way round. First, we find the
+eigenvalues from the characteristic equation, then we find
+$P$, then we get the diagonal matrix $D$.
+\end{rem}
+
+\begin{thm}[Diagonalization Theorem - VIT]
+\label{thm:dt-vit}
+\hfill
+
+\begin{enumerate}
+\item An $n \times n$ matrix $A$ is diagonalizable $\iff$ $A$ has $n$ linearly independent eigenvectors.
+\item In this case, $A = PDP^{-1}$, where the columns of $P$ are $n$ l.i. eigenvectors of $A$, and the diagonal entries of $D$ are eigenvalues corresponding to these eigenvectors.
+\end{enumerate}
+
+\end{thm}
+
+\begin{rem}
+Another way to express the above theorem is
+that an $n \times n$ matrix $A$ is diagonalizable $\iff$ it has
+enough (linearly independent) eigenvectors to form a
+basis of $\mathbb{R}^{n}$. Such a basis is called an \textbf{eigenvector basis}.
+\end{rem}
+
+In practice, we can distinguish three cases:
+
+\subsection{Case 1}
+An $n \times n$ matrix $A$ has $n$ distinct (real) eigenvalues. Then we get the following results:
+
+\begin{prop}
+An $n \times n$ matrix $A$ with $n$ distinct eigenvalues is diagonalizable.
+\end{prop}
+
+\begin{proof}
+By an earlier result Proposition~\ref{prop:50}, eigenvectors corresponding to distinct eigenvalues are linearly independent. Therefore in this case $A$ has $n$ linearly independent eigenvectors. Hence by the Thm.~\ref{thm:dt-vit} (DT-VIT), $A$ is diagonalizable.
+\end{proof}
+
+Given an eigenvalue $\lambda_{1}$ for a matrix $A$, we define:
+
+\begin{defn}
+The \textbf{algebraic multiplicity} of $\lambda_{1}$ is the power of the factor $(\lambda - \lambda_{1})$ in the characteristic polynomial of $A$
+\end{defn}
+
+\begin{defn}
+The \textbf{geometric multiplicity} of $\lambda_{1}$ is the dimension of the eigenspace corresponding to $\lambda_{1}$
+\end{defn}
+
+\begin{rem}
+The first definition is the one we have used for
+multiplicity up to now, as it applies to polynomials in
+general (not only the characteristic polynomial). The
+second definition applies specifically to the characteristic
+polynomial, since its roots are eigenvalues, which have
+corresponding eigenspaces.
+\end{rem}
+
+\subsection{Case 2}
+An $n \times n$ matrix $A$ has $p < n$ distinct eigenvalues, but counting the (algebraic) multiplicities, there are $n$ \underline{real} eigenvalues (\textit{\underline{not distinct}}). We now come to the weaker result for this case:
+
+\begin{prop}
+Let $A$ be an $n \times n$ matrix with n (real) eigenvalues (counting algebraic multiplicities) of which only $\lambda_{1}, \lambda_{2}, \dots, \lambda{p}$ are distinct ($p < n$). Then the following hold:
+
+\begin{enumerate}
+\item For $1 \leq k \leq p$, the geometric multiplicity is less than or equal to the algebraic multiplicity of $\lambda_{k}$.
+\item $A$ is diagonalizable $\iff$ the sum of the dimensions of the distinct eigenspaces is n $\iff$ the geometric multiplicity for each $\lambda_{k}$ eequals its algebraic multiplicity.
+\item If $A$ is diagonalizable, and $B_{k}$ is a basis for the eigenspace corresponding to $\lambda_{k}$ for each k, then the total collection of vectors in $B_{1}, \dots, B_{p}$ forms an eigenvector basis for $\mathbb{R}^{n}$.
+\end{enumerate}
+
+\end{prop}
+
+\subsection{Case 3}
+
+An $n \times n$ matrix $A$ has $p < n$ distinct eigenvalues, but even after counting the algebraic multiplicities, there are $< n$ (\underline{real}) eigenvalues (p could even be 0). Then $A$ is not diagonalizable over the real field. If we want to diagonalize, we have to admit complex eigenvalues and eigenvectors.
+
+\begin{rem}
+Even if we admit complex eigenvalues and
+eigenvectors, a real matrix does not have to be
+diagonalizable. The case is quite complicated, and we will
+not go into the details. However, we will consider the case
+of a $2 \times 2$ real matrix with a complex eigenvalue, and
+describe the nature of such a matrix and its corresponding
+transformation (i.e. a linear operator on $\mathbb{R}^{2}$).
+\end{rem}
+
+\section{Complex Eigenvalues}
+
+In case $A$ has complex eigenvalues, we regard $A$ as a linear transformation on the vector space $\mathbb{C}^{n}$, where $\mathbb{C}$ is the field of complex numbers. Then:
+
+A complex scalar $\lambda$ satisfies $det(A - \lambda I) = 0 \iff$ there is a nonzero vector $\bm{x}$ in $\mathbb{C}^{n}$ such that $A\bm{x} = \lambda \bm{x}$. $\lambda$ is called a complex eigenvalue and $\bm{x}$ is called a complex eigenvector.
+
+If $A\bm{x} = \lambda \bm{x}$, then taking complex conjugates, $\overline{A\bm{x}} = \overline{\lambda \bm{x}}$, or $\overline{A}\overline{\bm{x}} = \overline{\lambda} \overline{\bm{x}}$. However since $A$ is real, $\overline{A} = A$. So $A\overline{\bm{x}} = \overline{\lambda} \overline{\bm{x}}$, or $\overline{\lambda}$ is also an eigenvalue with eigenvector $\overline{\bm{x}}$. \textit{In other words, If $A$ is real, then its complex eigenvalues occur in conjugate pairs.}
+
+\begin{prop}[Basic result for Complex Eigenvalues]
+Suppose $A$ is a real $2 \times 2$ matrix with a complex eigenvalue $\lambda = a - bi, b \neq 0$, and associated eigenvector $\bm{v}$ in $\mathbb{C}^{2}$. Then $A = PBP^{-1}$ where
+
+$$
+P =
+\begin{bmatrix}
+ \operatorname{Re}(\bm{v}) & \operatorname{Im}(\bm{v})
+\end{bmatrix}, 
+B =
+\begin{bmatrix}
+a & -b \\
+b & a
+\end{bmatrix}
+$$
+
+\begin{itemize}
+\item Furthermore the transformation (left multiplication by $B$) corresponds to a rotation followed by scaling.
+\item The rotation is through the angle $\phi$ between the positive x-axis and the ray from the origin to $(a,b)$. The angle $\phi$ is called the \textit{argument} of $\lambda$.
+\item The scaling is by a factor $r = |\lambda| = \sqrt{a^{2} + b^{2}}$. The quantity $r = |\lambda|$ is known as the \textit{modulus} of $\lambda$.
+\end{itemize}
+
+\end{prop}
+
+\begin{eg}
+Suppose $A = \begin{bmatrix} 0 & 1 \\ -8 & 4 \end{bmatrix}$ then from its characteristic polynomial. Find its complex eigenvalues and eigenvectors, and briefly comment on what the matrix is doing.
+\end{eg}
+
+\begin{proof}[Solution]
+From its characteristic polynomial $det(A - \lambda I) = 8 - 4\lambda + \lambda^{2}$ we get eigenvalues $2 \pm 2i$. Take $\lambda = 2 + 2i$ (in other words, $a = 2$ and $b = -2$) then the matrix
+
+$$
+A - \lambda I = \begin{bmatrix} -2 - 2i & 1 \\ -8 & 2 - 2i \end{bmatrix}
+$$
+
+The corresponding eigenvector $\bm{v} = (x,y)$ (considered as a column vector with $x$ and $y$ as complex numbers) is obtained as the solution derived from the above matrix.
+
+This leads to two equations:
+
+$$
+(-2 - 2i)x + y = 0
+$$
+$$
+(-8)x + (2 - 2i)y = 0
+$$
+
+Since the matrix $A - \lambda I$ has a non-trivial solution, its two
+rows are linearly dependent. In other words, the two
+equations represent the same relationship between $x$ and $y$.
+We may give any value to one of them arbitrarily, and
+obtain the second from either of the two equations.
+
+Taking the first equation $(-2 -2i)x + y = 0$ and putting $x = 1$, we get:
+
+$$
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \\
+2 + 2i
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 \\
+2
+\end{bmatrix}
++ i
+\begin{bmatrix}
+0 \\
+2
+\end{bmatrix}
+$$
+
+Thus the matrix $P = \begin{bmatrix}1 & 0\\ 2 & 2\end{bmatrix}$
+and the matrix $B = \begin{bmatrix}2 & 2\\-2 & 2\end{bmatrix}$
+
+We can verify that $PBP^{-1} = 
 \end{proof}
 
 \end{document}
