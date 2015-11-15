@@ -6,7 +6,7 @@ def trace(f):
     @functools.wraps(f)
     def g(*args):
         global level
-        print "|  " * level + "|--", f.__name__, args
+        print("|  " * level + "|--", f.__name__, args)
         
         level += 1
         result = f(*args)

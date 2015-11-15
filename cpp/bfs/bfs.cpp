@@ -10,22 +10,7 @@ using namespace std;
 
 map<int, int> levels;
 
-vector<int> get_connected(int node, vector< vector<int> > adj_list)
-{
-	vector<int> connected;
-	int i, j;
-	for(i=0; i<adj_list.size(); i++) {
-		if (adj_list[i][0] == node) {
-			for (j=1; j<adj_list[i].size(); j++) {
-				connected.push_back(adj_list[i][j]);
-			}
-			break;
-		}
-	}
-	return connected;
-}
-
-void bfs(vector< vector<int> > adj_list, int start_node)
+void bfs(map<int, vector<int> > adj_list, int start_node)
 {
 	vector<int> visited;
 	queue<int> q;
@@ -40,9 +25,8 @@ void bfs(vector< vector<int> > adj_list, int start_node)
 			continue;
 		}
 		visited.push_back(node);
-		connected = get_connected(node, adj_list);	
-		for (i=0; i<connected.size(); i++) {
-			n = connected[i];
+		connected = adj_list[node];	
+		for (auto& n: connected) {
 			if (find(visited.begin(), visited.end(), n) == visited.end()) {
 				q.push(n);
 				if (levels.find(n) == levels.end()) {
@@ -50,34 +34,29 @@ void bfs(vector< vector<int> > adj_list, int start_node)
 				}
 			}
 		}
-		/*cout << endl << "Queue is: ";
-		queue<int> qu = q;
-		while(qu.front()) {
-			cout << qu.front() << " ";
-			qu.pop();
-		}
-		cout << endl;*/
 	}
 }
 
-int main()
+int main(int argc, char * argv[])
 {
-	vector< vector<int> > adj_list;
+	map<int, vector<int> > adj_list;
 	vector<int> node_list;
 	string line;
 	stringstream ss;
 	int node;
+	int edge;
 	int i, j;
 	while(getline(cin, line)) {
 		ss = stringstream();
 		ss.str(line);
 		node_list = vector<int>();
-		while (ss >> node) {
-			node_list.push_back(node);
+		ss >> node;
+		while (ss >> edge) {
+			node_list.push_back(edge);
 		}
-		adj_list.push_back(node_list);
+		adj_list[node] = node_list;
 	}
-	int start_node = adj_list[0][0];
+	int start_node = adj_list.begin()->first;
 	bfs(adj_list, start_node);
 	for(auto& node_i: levels) {
 		for(j = 0; j<node_i.second; j++) {
