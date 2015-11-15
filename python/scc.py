@@ -8,18 +8,44 @@ leaders = {}
 
 from trace1 import trace
 
-def dfs_loop(G, order):
+def dfs_loop(G, process_ord):
     global leaders
     leaders = {}
     visited = set()
-    for v in order:
+    for v in process_ord:
         if v not in visited:
             visited.add(v)
             dfs.leader = v
             dfs(G, v, visited)
 
+# Iterative
+# def dfs(G, v, visited):
+    # stack = []
+    # stack.append(('child', v))
+    # while len(stack) > 0:
+        # node = stack.pop()
+        # if (node[0] == 'parent'):
+            # order.append(node[1])
+            # continue
+        # stack.append(('parent', node[1]))
+        # if node in visited:
+            # continue
+        # if dfs.leader not in leaders.keys():
+            # leaders[dfs.leader] = [node[1]]
+        # else:
+            # leaders[dfs.leader].append(node[1])
+        # try:
+            # G[node[1]]
+        # except KeyError:
+            # order.append(node[1])
+            # continue
+        # for i in range(len(G[node[1]])-1, -1,-1):
+            # if G[node[1]][i] not in visited:
+                # visited.add(G[node[1]][i])
+                # stack.append(('child', G[node[1]][i]))
+
+# Recursive
 def dfs(G, v, visited):
-    # print(v, end=' ')
     if dfs.leader not in leaders.keys():
         leaders[dfs.leader] = [v]
     else:
@@ -27,16 +53,12 @@ def dfs(G, v, visited):
     try:
         G[v]
     except KeyError:
-        # finish[v] = dfs.current
-        # dfs.current -= 1
         order.append(v)
         return
     for n in G[v]:
         if n not in visited:
             visited.add(n) 
             dfs(G, n, visited)
-    # finish[v] = dfs.current
-    # dfs.current -= 1
     order.append(v)
 
 if __name__ == '__main__':
@@ -51,41 +73,13 @@ if __name__ == '__main__':
             reverse[edge[1]] = [edge[0]]
         else:
             reverse[edge[1]].append(edge[0])
-    dfs.current = max(reverse.keys())
-    dfs_loop(reverse, order=reverse.keys())
+    dfs_loop(reverse, tuple(reverse.keys()))
     # print(order)
-    # print()
-    # print(order)
+    dfs_loop(adj_list, tuple(order[::-1]))
     # print(leaders)
-    # print()
-    dfs.current = max(adj_list.keys())
-    dfs_loop(adj_list, order=tuple(order[::-1]))
-    # print()
-    # print(leaders)
-    # print()
-    #print(leaders)
     n = 0
     for l in sorted(leaders, key=lambda k: len(leaders[k]), reverse=True):
         if n > 4:
             break
         print(len(leaders[l]))
         n += 1
-
-# @trace
-# def dfs(G, v, visited):
-    # stack = []
-    # stack.append(v)
-    # while len(stack) > 0:
-        # node = stack.pop()
-        # if node in visited:
-            # continue
-        # print(node, end=' ')
-        # visited.add(node)
-        # try:
-            # G[node]
-        # except KeyError:
-            # continue
-        # for i in range(len(G[node])-1, -1,-1):
-            # if G[node][i] not in visited:
-                # stack.append(G[node][i])
-    # print()
