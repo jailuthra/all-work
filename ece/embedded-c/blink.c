@@ -9,7 +9,7 @@ int main()
     while(1)
     {
         PORTB |= 1 << 5;
-        _delay_ms(500);
+        _delay_ms(800);
 
         PORTB &= ~(1 << 5);
         _delay_ms(200);

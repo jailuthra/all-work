@@ -1,4 +1,4 @@
-CFLAGS=-mmcu=atmega328p
+CFLAGS=-mmcu=atmega328p -Os
 CC=avr-gcc
 
 all: $(name).hex
