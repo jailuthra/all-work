@@ -14,35 +14,37 @@ module decoder_t;
 
 	initial begin
 
+       $dumpfile("test.vcd");
+       $dumpvars(0,decoder_t);
 		C = 4'b1101;
-		#100;
+		#1;
 
 		C = 4'b1100;
-		#100;
+		#1;
 
 		C = 4'b1011;
-		#100;
+		#1;
 
 		C = 4'b1010;
-		#100;
+		#1;
 		
 		C = 4'b1001;
-		#100;
+		#1;
 
 		C = 4'b0010;
-		#100;
+		#1;
 		
 		C = 4'b0011;
-		#100;
+		#1;
 		
 		C = 4'b0100;
-		#100;
+		#1;
 		
 		C = 4'b0101;
-		#100;
+		#1;
 		
 		C = 4'b0110;
-		#100;
+		#1;
 
 
 	   
@@ -50,7 +52,8 @@ module decoder_t;
 	end
 
     initial
+    begin
        $monitor("At time %t, C = %b,  y = %b", $time, C , y); 
-      
+    end     
 endmodule
 
